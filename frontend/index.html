@@ -5,9 +5,17 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Notes4You</title>
-    <script defer type="module" src="/src/main.ts"></script>
+    <link rel="stylesheet" href="./src/style.css" />
+    <script defer type="module" src="./src/main.ts"></script>
+    <script src="node_modules/tinymce/tinymce.min.js"></script>
   </head>
   <body>
-    <div id="app"></div>
+    <div class="editor">
+      <textarea name="" id="textContent" cols="30" rows="10"></textarea>
+      <button id="saveBtn">Spara</button>
+    </div>
+    <div class="outputArea">
+      <div class="textResult"></div>
+    </div>
   </body>
 </html>
