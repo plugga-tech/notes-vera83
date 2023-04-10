@@ -1,0 +1,37 @@
+
+//ALLA NOTES
+GET http://localhost:3000/api/notes
+
+###
+
+// CREATE  NEW NOTE
+POST http://localhost:3000/api/notes
+Content-Type: application/json
+
+{
+  "title": "test titel",
+  "content": "asjfhdncjksksksojfosjodjof",
+  "authorId": "5"
+}
+
+###
+
+// UPDATE NOTE
+PUT http://localhost:3000/api/notes
+Content-Type: application/json
+
+{
+  "noteId": "2",
+  "title": "uppdaterat titel",
+  "content": "uppdaterat content"
+}
+
+###
+
+// GET NOTE BY ID
+GET  http://localhost:3000/api/notes/1
+
+###
+
+//DELETE NOTE
+DELETE http://localhost:3000/api/notes/4
