@@ -11,8 +11,10 @@ async function main() {
       notes: {
         create: [
           {
-            title: "Titel för kalle",
-            content: "Lite content till kalles notes",
+            title: "Mina memoarer",
+            content: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
+              Temporibus sed incidunt, voluptate soluta iure dolorum dolores atque quam. 
+              Natus, dicta commodi ab esse quod ullam aut possimus corrupti accusantium nobis.`,
           },
         ],
       },
@@ -29,12 +31,22 @@ async function main() {
       notes: {
         create: [
           {
-            title: "Titel ett",
-            content: "Lite content",
+            title: "Annas jättebra titel",
+            content: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
+            Temporibus sed incidunt, voluptate soluta iure dolorum dolores atque quam. 
+            Natus, dicta commodi ab esse quod ullam aut possimus corrupti accusantium nobis.
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
+            Temporibus sed incidunt, voluptate soluta iure dolorum dolores atque quam. 
+            Natus, dicta commodi ab esse quod ullam aut possimus corrupti accusantium nobis.`,
           },
           {
-            title: "Titel två",
-            content: "Lite mer testcontent",
+            title: "En lite längre bra titel",
+            content: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
+            Temporibus sed incidunt, voluptate soluta iure dolorum dolores atque quam. 
+            Natus, dicta commodi ab esse quod ullam aut possimus corrupti accusantium nobis.
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
+            Temporibus sed incidunt, voluptate soluta iure dolorum dolores atque quam. 
+            Natus, dicta commodi ab esse quod ullam aut possimus corrupti accusantium nobis.`,
           },
         ],
       },
