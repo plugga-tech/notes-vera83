@@ -2,7 +2,7 @@ import tinymce from "tinymce";
 
 const app = document.getElementById("app") as HTMLDivElement;
 
-export function edit(id?: string) {
+export async function edit(id?: string) {
   console.log("bajs");
 
   app.innerHTML = `
@@ -18,25 +18,69 @@ export function edit(id?: string) {
     selector: "#textContent",
     plugins: "code",
     toolbar: "code",
+
+    setup: function (editor) {
+      editor.on("init", async function () {
+        if (id) {
+          await loadNote(id);
+        }
+      });
+    },
   });
 
   const saveBtn = document.getElementById("saveBtn");
 
   saveBtn?.addEventListener("click", () => {
-    const title = document.getElementById("title")!.value;
-    const content = tinymce.activeEditor?.getContent();
-    const authorId = 3; //skall ersättas med inloggades id
-
-    fetch("http://localhost:3000/api/notes", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify({
-        title,
-        content,
-        authorId,
-      }),
-    });
+    if (id) {
+      updateNote(id);
+    } else {
+      createNote();
+    }
   });
+}
+
+async function updateNote(id: string) {
+  const title = document.getElementById("title")!.value;
+  const content = tinymce.activeEditor?.getContent();
+  const noteId = id;
+
+  fetch("http://localhost:3000/api/notes", {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "PUT",
+    body: JSON.stringify({
+      title,
+      content,
+      noteId,
+    }),
+  });
+}
+
+async function createNote() {
+  const title = document.getElementById("title")!.value;
+  const content = tinymce.activeEditor?.getContent();
+  const authorId = 3; //skall ersättas med inloggades id
+
+  fetch("http://localhost:3000/api/notes", {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify({
+      title,
+      content,
+      authorId,
+    }),
+  });
+}
+
+async function loadNote(id: string) {
+  const note = await fetch(`http://localhost:3000/api/notes/${id}`).then(
+    (response) => response.json()
+  );
+
+  document.getElementById("title").value = note.title;
+
+  tinymce.activeEditor?.setContent(note.content);
 }
