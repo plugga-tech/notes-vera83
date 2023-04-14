@@ -1,23 +1,26 @@
 import tinymce from "tinymce";
+import { list } from "./list";
+import { login } from "./login";
 
 const app = document.getElementById("app") as HTMLDivElement;
 
 export async function edit(id?: string) {
-  console.log("bajs");
-
   app.innerHTML = `
-  <h1>Titel</h1>
-  <input id="title" type="text">
-  <div class="editor">
-  <textarea name="" id="textContent" cols="" rows=""></textarea>
-    <button class="saveBtn" id="saveBtn">Spara</button>
-    <button class="editBtn" id="editBtn">Avbryt</button>
- </div>`;
+  <h3>Namn på dokumentet:</h3>
+    <div class="editArea">
+     <input class ="titleInput" id="title" type="text">
+        <textarea name="" id="textContent" cols="" rows=""></textarea>
+        <div class="editButtons">
+             <button class="saveBtn" id="saveBtn">Spara</button>
+             <button class="abortBtn" id="abortBtn">Avbryt</button>
+        </div>
+    </div>`;
 
   tinymce.init({
     selector: "#textContent",
     plugins: "code",
-    toolbar: "code",
+    toolbar:
+      "undo redo | bold | italic | fontsize | forecolor backcolor | alignleft aligncenter alignright alignjustify",
 
     setup: function (editor) {
       editor.on("init", async function () {
@@ -28,19 +31,28 @@ export async function edit(id?: string) {
     },
   });
 
+  //sparaknappen uppdaterar en bef. eller skapar en ny note
   const saveBtn = document.getElementById("saveBtn");
-
   saveBtn?.addEventListener("click", () => {
     if (id) {
       updateNote(id);
     } else {
       createNote();
     }
+    location.reload();
+  });
+
+  //Avbrytknappen tar dig tillbaka till listvyn utan att spara eller skapa
+  const abortBtn = document.getElementById("abortBtn");
+  abortBtn?.addEventListener("click", () => {
+    location.reload();
   });
 }
 
+//funktion för att uppdatera befintlig note
 async function updateNote(id: string) {
-  const title = document.getElementById("title")!.value;
+  const titleEl = document.getElementById("title") as HTMLInputElement;
+  const title = titleEl.value;
   const content = tinymce.activeEditor?.getContent();
   const noteId = id;
 
@@ -57,10 +69,12 @@ async function updateNote(id: string) {
   });
 }
 
+//funktion för att skapa en ny note
 async function createNote() {
-  const title = document.getElementById("title")!.value;
+  const titleEl = document.getElementById("title") as HTMLInputElement;
+  const title = titleEl.value;
   const content = tinymce.activeEditor?.getContent();
-  const authorId = 3; //skall ersättas med inloggades id
+  const authorId = getUserId(); //skall ersättas med inloggades id
 
   fetch("http://localhost:3000/api/notes", {
     headers: {
@@ -80,7 +94,18 @@ async function loadNote(id: string) {
     (response) => response.json()
   );
 
-  document.getElementById("title").value = note.title;
+  const titleEl = document.getElementById("title") as HTMLInputElement;
+  titleEl.value = note.title;
 
   tinymce.activeEditor?.setContent(note.content);
+}
+
+function getUserId() {
+  const userString = localStorage.getItem("user");
+  if (!userString) {
+    login();
+  } else {
+    const user = JSON.parse(userString);
+    return user.id;
+  }
 }
