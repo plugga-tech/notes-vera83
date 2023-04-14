@@ -5,7 +5,7 @@ const router = express.Router();
 
 //returns a list with all notes
 router.get("/", async (req, res) => {
-  const notes = await prisma.note.findMany();
+  const notes = await prisma.note.findMany({ include: { author: true } });
   res.send(notes);
 });
 
