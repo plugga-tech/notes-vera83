@@ -4,6 +4,7 @@ import { login } from "./login";
 
 const app = document.getElementById("app") as HTMLDivElement;
 
+//open editor
 export async function edit(id?: string) {
   app.innerHTML = `
   <h3>Namn på dokumentet:</h3>
@@ -31,7 +32,7 @@ export async function edit(id?: string) {
     },
   });
 
-  //sparaknappen uppdaterar en bef. eller skapar en ny note
+  //save note
   const saveBtn = document.getElementById("saveBtn");
   saveBtn?.addEventListener("click", async () => {
     if (id) {

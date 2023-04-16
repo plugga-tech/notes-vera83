@@ -6,6 +6,7 @@ const app = document.getElementById("app") as HTMLDivElement;
 type Note = {
   id: number;
   title: string;
+  createdAt: string;
   author: {
     name: string;
   };
@@ -26,10 +27,12 @@ export async function list() {
   const ul = document.createElement("ul");
   notes.forEach((note) => {
     const li = document.createElement("li");
+    const createdAt = new Date(note.createdAt);
     li.innerHTML = `
         <div class="listItems">
           <span class="noteTitle">${note.title}</span>
           <span class="noteAuthor">Skapat av: ${note.author.name}</span>
+          <span class="noteDate">${createdAt.toLocaleString()}</span>
         </div>
         <div class="listButtons">
           <button data-id="${note.id}" class="showBtn">visa</button>

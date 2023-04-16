@@ -83,8 +83,9 @@ li {
   gap: 10px;
 }
 
-.noteAuthor {
-  font-size: 16px;
+.noteAuthor,
+.noteDate {
+  font-size: 14px;
 }
 
 .noteTitle {
