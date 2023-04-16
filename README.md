@@ -1,9 +1,56 @@
-Projektstart:
+//BACKEND
 
-Jag valde att använda typescript i detta projekt för att det är användbart att få lite hjälp när man ska skriva koden och för att jag vill öva.
+För att köra notes backend + databas:
 
-Express, cors, typescript och nodemon är installerat i backend. Jag har valt att inte installera express generator no view för att jag helt enkelt inte behöver det.
+- Starta mysql server på port 3306
 
-Vite med typescript och tinymce är installerat i frontend
+- I backend behövs fil .env med dessa uppgifter:
+  DATABASE_URL="mysql://notes-app:mypassword@localhost:3306/notes"
 
-jag använder mig också av docker för att köra min mysql databas, den blev jag tipsad om och det lät som en fördel att inte behöva ladda ner något program till datorn och att jag där också kan köra sql och annat utan att behöva ladda ner det lokalt.
+- I databasen behöver det finnas en användare `notes-app:mypassword`
+
+```
+CREATE USER 'notes-app'@'%' IDENTIFIED BY 'mypassword';
+```
+
+- Med rättigheter:
+
+```
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, FILE, REFERENCES, ALTER ON *.* TO 'notes-app'@'%';
+```
+
+- I backend i terminalen kör:
+
+```
+npm install
+```
+
+- Skapa databastabeller och testdata:
+
+```
+npx prisma migrate dev
+```
+
+- Starta servern:
+
+```
+npm run dev
+```
+
+- verifiera genom http://localhost:3000/api/notes/
+
+//FRONTEND
+
+- I frontend i terminalen kör:
+
+```
+npm install
+```
+
+```
+npm run dev
+```
+
+Logga in på login startsidan med användare Kalle eller Anna
+
+Du är förhoppningsvis igång!
