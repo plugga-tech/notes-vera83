@@ -22,6 +22,7 @@ export async function list() {
 
   app.append(header, subhHeader);
 
+  //create note list
   const result = await fetch("http://localhost:3000/api/notes");
   const notes = (await result.json()) as Note[];
   const ul = document.createElement("ul");
@@ -44,7 +45,7 @@ export async function list() {
   });
   app.append(ul);
 
-  //show button, show note in uneditable state
+  //show note in uneditable state
   document.querySelectorAll<HTMLButtonElement>(".showBtn").forEach((button) => {
     button.onclick = async (e) => {
       if (!(e.currentTarget instanceof HTMLButtonElement)) {
@@ -55,7 +56,7 @@ export async function list() {
     };
   });
 
-  //edit button, open tinymce to edit excisting note
+  //open tinymce to edit excisting note
   document.querySelectorAll<HTMLButtonElement>(".editBtn").forEach((button) => {
     button.onclick = async (e) => {
       if (!(e.currentTarget instanceof HTMLButtonElement)) {
@@ -66,6 +67,7 @@ export async function list() {
     };
   });
 
+  //delete created note
   document
     .querySelectorAll<HTMLButtonElement>(".deleteBtn")
     .forEach((button) => {
@@ -82,7 +84,7 @@ export async function list() {
       };
     });
 
-  // newNote Button to create a new note
+  //create a new note
   const newNoteBtn = document.createElement("button");
   newNoteBtn.innerText = "Skapa nytt";
   newNoteBtn.classList.add("newNoteBtn");
@@ -93,7 +95,7 @@ export async function list() {
     edit();
   });
 
-  //log out button
+  //log out
   const logoutBtn = document.createElement("button");
   logoutBtn.innerText = "Logga ut";
   logoutBtn.classList.add("logoutBtn");

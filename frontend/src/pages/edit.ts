@@ -43,14 +43,14 @@ export async function edit(id?: string) {
     location.reload();
   });
 
-  //Avbrytknappen tar dig tillbaka till listvyn utan att spara eller skapa
+  //abort to go back to list without creating or edit note
   const abortBtn = document.getElementById("abortBtn");
   abortBtn?.addEventListener("click", () => {
     location.reload();
   });
 }
 
-//funktion för att uppdatera befintlig note
+//edit created note
 function updateNote(id: string) {
   const titleEl = document.getElementById("title") as HTMLInputElement;
   const title = titleEl.value;
@@ -70,12 +70,12 @@ function updateNote(id: string) {
   });
 }
 
-//funktion för att skapa en ny note
+//create new note
 function createNote() {
   const titleEl = document.getElementById("title") as HTMLInputElement;
   const title = titleEl.value;
   const content = tinymce.activeEditor?.getContent();
-  const authorId = getUserId(); //skall ersättas med inloggades id
+  const authorId = getUserId();
 
   return fetch("http://localhost:3000/api/notes", {
     headers: {
@@ -90,6 +90,7 @@ function createNote() {
   });
 }
 
+//open editor to edit existing note
 async function loadNote(id: string) {
   const note = await fetch(`http://localhost:3000/api/notes/${id}`).then(
     (response) => response.json()
@@ -101,6 +102,7 @@ async function loadNote(id: string) {
   tinymce.activeEditor?.setContent(note.content);
 }
 
+//get userId to connect user and note
 function getUserId() {
   const userString = localStorage.getItem("user");
   if (!userString) {
