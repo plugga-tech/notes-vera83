@@ -33,11 +33,11 @@ export async function edit(id?: string) {
 
   //sparaknappen uppdaterar en bef. eller skapar en ny note
   const saveBtn = document.getElementById("saveBtn");
-  saveBtn?.addEventListener("click", () => {
+  saveBtn?.addEventListener("click", async () => {
     if (id) {
-      updateNote(id);
+      await updateNote(id);
     } else {
-      createNote();
+      await createNote();
     }
     location.reload();
   });
@@ -50,13 +50,13 @@ export async function edit(id?: string) {
 }
 
 //funktion för att uppdatera befintlig note
-async function updateNote(id: string) {
+function updateNote(id: string) {
   const titleEl = document.getElementById("title") as HTMLInputElement;
   const title = titleEl.value;
   const content = tinymce.activeEditor?.getContent();
   const noteId = id;
 
-  fetch("http://localhost:3000/api/notes", {
+  return fetch("http://localhost:3000/api/notes", {
     headers: {
       "Content-Type": "application/json",
     },
@@ -70,13 +70,13 @@ async function updateNote(id: string) {
 }
 
 //funktion för att skapa en ny note
-async function createNote() {
+function createNote() {
   const titleEl = document.getElementById("title") as HTMLInputElement;
   const title = titleEl.value;
   const content = tinymce.activeEditor?.getContent();
   const authorId = getUserId(); //skall ersättas med inloggades id
 
-  fetch("http://localhost:3000/api/notes", {
+  return fetch("http://localhost:3000/api/notes", {
     headers: {
       "Content-Type": "application/json",
     },

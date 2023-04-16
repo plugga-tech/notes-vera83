@@ -11,13 +11,13 @@ type Note = {
   };
 };
 
-// render list page and functionality
+// render list
 export async function list() {
   const header = document.createElement("h1");
   const subhHeader = document.createElement("h3");
 
   header.innerText = "Välkommen till Notes4You";
-  subhHeader.innerText = "Skapade dokument:";
+  subhHeader.innerText = "Sparade dokument:";
 
   app.append(header, subhHeader);
 
@@ -27,30 +27,19 @@ export async function list() {
   notes.forEach((note) => {
     const li = document.createElement("li");
     li.innerHTML = `
-      <div class="listItems">
-          <span>${note.title}</span>
-          <span>${note.author.name}</span>
-          </div>
-          <div class="listButtons">
-            <button data-id="${note.id}" class="showBtn">visa</button>
-            <button data-id="${note.id}" class="editBtn">redigera</button>
-          
-      </div>
+        <div class="listItems">
+          <span class="noteTitle">${note.title}</span>
+          <span class="noteAuthor">Skapat av: ${note.author.name}</span>
+        </div>
+        <div class="listButtons">
+          <button data-id="${note.id}" class="showBtn">visa</button>
+          <button data-id="${note.id}" class="editBtn">redigera</button>
+          <button data-id="${note.id}" class="deleteBtn">Radera</button>
+        </div>
           `;
     ul.appendChild(li);
   });
   app.append(ul);
-
-  // newNote Button to create a new note
-  const newNoteBtn = document.createElement("button");
-  newNoteBtn.innerText = "Skapa nytt";
-  newNoteBtn.classList.add("newNoteBtn");
-
-  app.appendChild(newNoteBtn);
-
-  newNoteBtn.addEventListener("click", () => {
-    edit();
-  });
 
   //show button, show note in uneditable state
   document.querySelectorAll<HTMLButtonElement>(".showBtn").forEach((button) => {
@@ -72,6 +61,33 @@ export async function list() {
       const id = e.currentTarget?.dataset.id;
       edit(id);
     };
+  });
+
+  document
+    .querySelectorAll<HTMLButtonElement>(".deleteBtn")
+    .forEach((button) => {
+      button.onclick = async (e) => {
+        if (!(e.currentTarget instanceof HTMLButtonElement)) {
+          return;
+        }
+        const id = e.currentTarget?.dataset.id;
+        await fetch(`http://localhost:3000/api/notes/${id}`, {
+          method: "DELETE",
+        });
+
+        location.reload();
+      };
+    });
+
+  // newNote Button to create a new note
+  const newNoteBtn = document.createElement("button");
+  newNoteBtn.innerText = "Skapa nytt";
+  newNoteBtn.classList.add("newNoteBtn");
+
+  app.appendChild(newNoteBtn);
+
+  newNoteBtn.addEventListener("click", () => {
+    edit();
   });
 
   //log out button

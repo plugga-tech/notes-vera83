@@ -27,7 +27,7 @@ export async function login() {
       }),
     });
     if (!response.ok) {
-      alert("fel användrnamn");
+      alert("fel användarnamn");
     } else {
       const user = await response.json();
       localStorage.setItem("user", JSON.stringify(user));

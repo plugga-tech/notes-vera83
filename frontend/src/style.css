@@ -40,6 +40,12 @@ button {
   background-color: rgb(250, 200, 107);
 }
 
+.deleteBtn {
+  background-color: rgb(237, 6, 6);
+  color: white;
+  margin-left: 300px;
+}
+
 .newNoteBtn {
   background-color: rgb(145, 238, 145);
   margin-right: 10px;
@@ -47,6 +53,11 @@ button {
 
 .listButtons {
   margin-top: 10px;
+}
+
+.editButtons {
+  display: flex;
+  gap: 20px;
 }
 
 ul {
@@ -66,13 +77,22 @@ li {
   padding: 10px;
 }
 
+.listItems {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.noteAuthor {
+  font-size: 16px;
+}
+
+.noteTitle {
+  font-weight: 500;
+}
+
 .editArea {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-}
-
-.editButtons {
-  display: flex;
   gap: 20px;
 }
